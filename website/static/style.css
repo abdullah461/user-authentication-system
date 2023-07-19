@@ -1,0 +1,78 @@
+@import url('https://fonts.googleapis.com/css2?family=Lora:wght@400;700&family=Montserrat:wght@300;400&display=swap');
+
+* {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+    
+}
+/* font-family: 'Lora', serif;
+font-family: 'Montserrat', sans-serif; */
+
+.container {
+    width: 100vw;
+    height: 100vh;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.sign-up{
+    padding: 2em;
+    width: 25em;
+    height: auto;
+    border: 2px solid #973432;
+    border-radius: 10px;
+
+}
+
+h1{
+    font-family: 'lora', serif;
+    color:#973432;
+}
+
+p{
+    font-family: 'Montserrat', sans-serif;
+    
+}
+p a{
+    color: #973432;
+    font-weight: 700;
+    text-decoration: none;
+}
+label{
+    font-family: 'Montserrat', sans-serif;
+    font-size: small;
+    font-weight: 700;
+}
+.input{
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+    gap: 5px;
+}
+input{
+    height: 2.5em;
+    padding: 5px;
+    border-radius: 5px;
+    border: 0.5px solid lightgray;
+    font-family: 'Montserrat', sans-serif;
+    
+
+}
+
+form{
+    display: flex;
+    flex-direction: column;
+}
+form button{
+    margin-top: 15px;
+    padding: 0.6em;
+    margin-bottom: 10px;
+    border-style: none;
+    background-color: #973432;
+    border-radius: 5px;
+    cursor: pointer;
+    color: white;
+    font-family: 'lora', serif;
+}
