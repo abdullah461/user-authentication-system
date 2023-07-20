@@ -9,6 +9,24 @@
 /* font-family: 'Lora', serif;
 font-family: 'Montserrat', sans-serif; */
 
+nav .nav-container{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 3em;
+}
+nav .nav-container .sign-link{
+    display: flex;
+    gap: 2em;
+    
+}
+nav .nav-container .sign-link a{
+    text-decoration: none;
+    color: black;
+    font-family: 'montserrat', sans-serif;
+}
+
 .container {
     width: 100vw;
     height: 100vh;
@@ -33,6 +51,7 @@ h1{
 
 p{
     font-family: 'Montserrat', sans-serif;
+    font-size: 12px;
     
 }
 p a{
@@ -44,6 +63,7 @@ label{
     font-family: 'Montserrat', sans-serif;
     font-size: small;
     font-weight: 700;
+    color: gray;
 }
 .input{
     display: flex;

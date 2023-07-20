@@ -1,0 +1,8 @@
+signup
+    sign up with google
+    send otp to confirm user
+login
+    login with google
+reset password
+base
+home
