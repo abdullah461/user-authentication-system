@@ -8,7 +8,10 @@
 }
 /* font-family: 'Lora', serif;
 font-family: 'Montserrat', sans-serif; */
-
+body{
+    width: 100vw;
+    height: 100vh;
+}
 nav .nav-container{
     width: 100%;
     display: flex;
@@ -28,8 +31,6 @@ nav .nav-container .sign-link a{
 }
 
 .container {
-    width: 100vw;
-    height: 100vh;
     background-color: white;
     display: flex;
     align-items: center;
