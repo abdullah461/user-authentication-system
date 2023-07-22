@@ -30,6 +30,12 @@ nav .nav-container .sign-link a{
     font-family: 'montserrat', sans-serif;
 }
 
+.alert{
+    width: 50px;
+    height: 30px;
+    color: green;
+}
+
 .container {
     background-color: white;
     display: flex;
@@ -96,4 +102,8 @@ form button{
     cursor: pointer;
     color: white;
     font-family: 'lora', serif;
+}
+
+form button:last-child{
+    background-color: blue;
 }
