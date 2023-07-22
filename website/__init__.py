@@ -2,18 +2,28 @@ from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
 from os import path
 from flask_login import LoginManager
+import MySQLdb
 
+from sqlalchemy import create_engine
 
 # database
 db = SQLAlchemy()
-db_name =  "database.db"
+# db_name =  "database.db"
 
 def create_app():
     app = Flask(__name__)
 
     app.config['SECRET_KEY'] = 'njkanbjhbehdbdhebekbewjh'
-    app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{db_name}'    
-    # app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://pgdaxrj9kn5ooadbodu0:pscale_pw_MhtAbC6zEJCYsfkujE4IPaw1CGpsC05vGD74bwGHgzt@gcp.connect.psdb.cloud/user_as'
+    # app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///database.db'    
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:lludbA090@localhost/user_as'
+    # engine = create_engine('mysql+pymysql://pgdaxrj9kn5ooadbodu0:pscale_pw_MhtAbC6zEJCYsfkujE4IPaw1CGpsC05vGD74bwGHgzt@gcp.connect.psdb.cloud:3306/user_as')
+    # app.config['SQLALCHEMY_DATABASE_URI'] = MySQLdb.connect(
+    #     host = "localhost",
+    #     user = "root",
+    #     password = "lludbA090",
+    #     db = "user_as"
+    # )
+
 
     db.init_app(app)
 
