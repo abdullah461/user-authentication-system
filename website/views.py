@@ -1,16 +1,48 @@
-from flask import Blueprint, render_template, flash, request, redirect, url_for
+from flask import Blueprint, render_template, flash, request, redirect, url_for, abort, session
 from .models import User
 from . import db
 from werkzeug.security import check_password_hash, generate_password_hash
 from flask_login import login_user, login_required, current_user, logout_user
 
+import requests
+from pip._vendor import cachecontrol
+import google.auth.transport.requests
+from google.oauth2 import id_token
+import os
+import pathlib
+from google_auth_oauthlib.flow import Flow
+
 views = Blueprint('views',__name__)
+
+# Oauth 
+os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
+GOOGLE_CLIENT_ID = "509297815925-9bqiqt7ntbgr5jknb0lmeeifqkpeaa6g.apps.googleusercontent.com"
+client_secrets_file = os.path.join(pathlib.Path(__file__).parent, "client_secret.json")
+
+flow = Flow.from_client_secrets_file(
+client_secrets_file=client_secrets_file,
+scopes=["https://www.googleapis.com/auth/userinfo.profile", "https://www.googleapis.com/auth/userinfo.email", "openid"],
+redirect_uri="http://127.0.0.1:5000/callback"
+)
+
+
+def login_is_required(function):
+    def wrapper(*args, **kwargs):
+        if "google_id" not in session:
+            return abort(401)  # Authorization required
+        else:
+            return function()
+
+    return wrapper
+
 
 
 @views.route('/')
-@login_required
+@login_is_required
 def home():
     return render_template('home.html', user=current_user) 
+
+
 
 @views.route('/sign-up', methods=['GET','POST'])
 def signup():
@@ -55,8 +87,38 @@ def login():
 
     return render_template('login.html', user=current_user) 
 
+@views.route('/googlelogin')
+def googlelogin():
+    authorization_url, state = flow.authorization_url()
+    session["state"] = state
+    return redirect(authorization_url)
+
+
 @views.route('/logout')
 def logout():
     logout_user()
     return redirect(url_for('views.login')) 
 
+
+# google call back function
+@views.route("/callback")
+def callback():
+    flow.fetch_token(authorization_response=request.url)
+
+    if not session["state"] == request.args["state"]:
+        abort(500)  # State does not match!
+
+    credentials = flow.credentials
+    request_session = requests.session()
+    cached_session = cachecontrol.CacheControl(request_session)
+    token_request = google.auth.transport.requests.Request(session=cached_session)
+
+    id_info = id_token.verify_oauth2_token(
+        id_token=credentials._id_token,
+        request=token_request,
+        audience= GOOGLE_CLIENT_ID
+    )
+
+    session["google_id"] = id_info.get("sub")
+    session["name"] = id_info.get("name")
+    return redirect(url_for("views.home"))
