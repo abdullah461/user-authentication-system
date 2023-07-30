@@ -12,7 +12,7 @@ import os
 import pathlib
 from google_auth_oauthlib.flow import Flow
 
-views = Blueprint('views',__name__)
+auth = Blueprint('auth',__name__)
 
 # Oauth 
 os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
@@ -37,14 +37,14 @@ def login_is_required(function):
 
 
 
-@views.route('/')
-@login_is_required
+@auth.route('/')
+
 def home():
     return render_template('home.html', user=current_user) 
 
 
 
-@views.route('/sign-up', methods=['GET','POST'])
+@auth.route('/sign-up', methods=['GET','POST'])
 def signup():
     if request.method == 'POST':
         fullname = request.form.get('fullname')
@@ -63,10 +63,10 @@ def signup():
         db.session.commit()
         flash('Account created!', category='success')
         login_user(new_user, remember=True)
-        return redirect(url_for('views.home'))
+        return redirect(url_for('auth.home'))
     return render_template('signup.html', user = current_user) 
 
-@views.route('/login', methods=['GET','POST'])
+@auth.route('/login', methods=['GET','POST'])
 def login():
     if request.method == "POST":
         email = request.form.get('email')
@@ -78,7 +78,7 @@ def login():
             if check_password_hash(user.password, password):
                 flash('logged in succesfully')
                 login_user(user, remember=True)
-                return redirect(url_for('views.home'))
+                return redirect(url_for('auth.home'))
             else:
                 flash('incorrect password, try again')
             
@@ -87,21 +87,21 @@ def login():
 
     return render_template('login.html', user=current_user) 
 
-@views.route('/googlelogin')
+@auth.route('/googlelogin')
 def googlelogin():
     authorization_url, state = flow.authorization_url()
     session["state"] = state
     return redirect(authorization_url)
 
 
-@views.route('/logout')
+@auth.route('/logout')
 def logout():
     logout_user()
-    return redirect(url_for('views.login')) 
+    return redirect(url_for('auth.login')) 
 
 
 # google call back function
-@views.route("/callback")
+@auth.route("/callback")
 def callback():
     flow.fetch_token(authorization_response=request.url)
 
@@ -121,4 +121,4 @@ def callback():
 
     session["google_id"] = id_info.get("sub")
     session["name"] = id_info.get("name")
-    return redirect(url_for("views.home"))
+    return redirect(url_for("auth.home"))
