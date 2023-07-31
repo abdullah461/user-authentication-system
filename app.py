@@ -20,7 +20,6 @@ cnx = MySQLdb.connect(
     'capath': "/path/to/certs",
   }
 )
-   
 
 print("Successfully connected to PlanetScale!")
 
