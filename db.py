@@ -1,5 +1,11 @@
 import mysql.connector
-import MySQLdb
+from dotenv import load_dotenv
+load_dotenv()
+import os
+user = os.getenv('USER')
+print(user)
+
+
 
 '''
 
