@@ -6,7 +6,7 @@ import MySQLdb
 from sqlalchemy import create_engine, text
 load_dotenv()
 
-
+# updated pip
 ''''
 cnx = MySQLdb.connect(
     user = os.getenv('USERNAME'),
