@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 import os 
 import MySQLdb
 from sqlalchemy import create_engine, text
-load_dotenv()
+load_dotenv('.env')
 
 
 ''''
