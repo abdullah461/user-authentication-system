@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://github.com/roshanlam/ReadMeTemplate/">
-    <img src="./logo.png" alt="Logo" width="80" height="80">
+    <img src="./" alt="Logo" width="80" height="80">
   </a>
 </p>
 
