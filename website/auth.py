@@ -54,16 +54,16 @@ def signup():
 
         user = User.query.filter_by(email=email).first()
         if user:
-            flash('User with this email already exist!')
+            flash('User with this email already exist!', category='error')
         elif password != confirm_password:
-            flash('password do not match')
+            flash('password do not match',category='error')
         new_user = User(fullname = fullname, email = email, phone = phone, password = generate_password_hash(password, method='sha256'))
         db.session.add(new_user)
         db.session.commit()
         flash('Account created!', category='success')
         login_user(new_user, remember=True)
         return redirect(url_for('auth.home'))
-    return render_template('signup.html', user = current_user) 
+    return render_template('signup.html', user = current_user), 404
 
 @auth.route('/login', methods=['GET','POST'])
 def login():
@@ -79,10 +79,10 @@ def login():
                 login_user(user, remember=True)
                 return redirect(url_for('auth.home'))
             else:
-                flash('incorrect password, try again')
+                flash('incorrect password, try again', category='error')
             
         else:
-            flash('User with this mail does not exist, kindly sign-up')
+            flash('User with this mail does not exist, kindly sign-up', category='error')
 
     return render_template('login.html', user=current_user) 
 
@@ -136,7 +136,7 @@ def resetpassword():
         user = User.query.filter_by(email=email).first()
         if user:
             return redirect(url_for('auth.new_password'))
-        flash('User does not exist')
+        flash('User does not exist', category='error')
     return render_template('reset-password.html', user=current_user), 404
 
 @auth.route('/new-password', methods=['GET','POST'])
@@ -146,7 +146,7 @@ def new_password():
         password = request.form.get('password')
         confirmpassword = request.form.get('confirmpassword')
         if password != confirmpassword:
-            flash('password does not match')
+            flash('password does not match', category='error')
         # new_password = generate_password_hash(password, method='sha256')
         # User.password = new_password
         # db.session.commit()

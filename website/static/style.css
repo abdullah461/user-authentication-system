@@ -41,6 +41,8 @@ nav .nav-container .sign-link a{
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
+    gap: 5px;
 }
 .sign-up{
     padding: 2em;
