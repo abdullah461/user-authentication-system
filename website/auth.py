@@ -137,7 +137,7 @@ def resetpassword():
         if user:
             return redirect(url_for('auth.new_password'))
         flash('User does not exist')
-    return render_template('reset-password.html', user=current_user) 
+    return render_template('reset-password.html', user=current_user), 404
 
 @auth.route('/new-password', methods=['GET','POST'])
 def new_password():
@@ -153,7 +153,7 @@ def new_password():
         if password:
             user.set_password(password, commit=True)
             return redirect(url_for('auth.login'))
-    return render_template('new-password.html', user=current_user) 
+    return render_template('new-password.html', user=current_user), 404
 
 @auth.errorhandler(404)
 def page_not_found(e):
