@@ -92,6 +92,11 @@ form{
     display: flex;
     flex-direction: column;
 }
+
+form p{
+margin-top: 5px;
+}
+
 form button{
     margin-top: 15px;
     padding: 0.6em;
@@ -104,6 +109,14 @@ form button{
     font-family: 'lora', serif;
 }
 
-form button:last-child{
+#googlelogin{
     background-color: blue;
+    border-style: none;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    font-family: 'lora', serif;
+    padding: 0.6em;
+    text-align: center;
+    text-decoration: none;
 }

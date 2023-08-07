@@ -38,7 +38,6 @@ def login_is_required(function):
 
 
 @auth.route('/')
-
 def home():
     return render_template('home.html', user=current_user) 
 
@@ -97,6 +96,7 @@ def googlelogin():
 @auth.route('/logout')
 def logout():
     logout_user()
+    session.clear()
     return redirect(url_for('auth.login')) 
 
 
@@ -121,4 +121,40 @@ def callback():
 
     session["google_id"] = id_info.get("sub")
     session["name"] = id_info.get("name")
+
+    new_user = User(fullname=session['name']) 
+    db.session.add(new_user)
+    db.session.commit()
+    flash('Account created!', category='success')
+    login_user(new_user, remember=True)
     return redirect(url_for("auth.home"))
+
+@auth.route('/reset-password', methods=['GET','POST'])
+def resetpassword():
+    if request.method=='POST':
+        email = request.form.get('email')
+        user = User.query.filter_by(email=email).first()
+        if user:
+            return redirect(url_for('auth.new_password'))
+        flash('User does not exist')
+    return render_template('reset-password.html', user=current_user) 
+
+@auth.route('/new-password', methods=['GET','POST'])
+def new_password():
+    user = current_user
+    if request.method=='POST':
+        password = request.form.get('password')
+        confirmpassword = request.form.get('confirmpassword')
+        if password != confirmpassword:
+            flash('password does not match')
+        # new_password = generate_password_hash(password, method='sha256')
+        # User.password = new_password
+        # db.session.commit()
+        if password:
+            user.set_password(password, commit=True)
+            return redirect(url_for('auth.login'))
+    return render_template('new-password.html', user=current_user) 
+
+@auth.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html', user=current_user), 404
