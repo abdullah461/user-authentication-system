@@ -1,6 +1,22 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="welcome-text">
-    <h1>WELCOME {{ user.fullname }}</h1>
+<div class="home-container">
+    <div class="banner">
+        <h1>User Authentication and  <br>Autorisation system</h1>
+        <p>
+        This system serves as biolerplate to enable build sytem that requires user authentication and authorisation much faster <br>
+        it entails Features such as: <br>
+        1. Sign in <br>
+        2. Login in & Log out<br>
+        3. Login with you google account <br>
+        4. Password reset <br>
+        5. Password reset with Google acount coming soon...<br>
+        
+        </p>
+        <p>
+            This website is been hosted on render and the database is hosted on planet scale. <br>
+            After Signing in, the user is directed to the welcome page with his name <span style="color: violet;">"Welcome {USER}"</span>
+        </p>
+    </div>
 </div>
 {% endblock %}
