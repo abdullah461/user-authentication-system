@@ -2,12 +2,12 @@ from flask import Flask, render_template, abort, session, redirect, url_for, req
 from flask_sqlalchemy import SQLAlchemy
 from os import path
 from flask_login import LoginManager
-import MySQLdb
+
 from dotenv import load_dotenv
 import os #provides ways to access the Operating System and allows us to read the environment variables
-from flask_bcrypt import Bcrypt
+
 from flask_login import LoginManager
-from flask_moment import Moment
+
 from flask_mail import Mail
 
 
