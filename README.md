@@ -8,12 +8,13 @@
 the system serve as a boilerplate for building websites with user authentication, authorization and managemnet.
 
 ## Built with:
-- Python(Flask)
+- Python(Flask) and Mysql database
 - Deployed on render
 - Database Deployed on PlanetScale 
 
 ## features
-- login
+- login & logout
 - sign-up
 - login with google
-- password reset with google
+- Password reset
+- password reset with google coming soon...
