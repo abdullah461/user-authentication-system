@@ -42,10 +42,10 @@ def login_is_required(function):
 def home():
     return render_template('home.html', user=current_user) 
 
-@auth.route('/welcome-page')
-@login_required
-def welcome_page():
-    return render_template('welcome-page.html', user=current_user) 
+# @auth.route('/welcome-page')
+# @login_required
+# def welcome_page():
+#     return render_template('welcome-page.html', user=current_user) 
 
 
 @auth.route('/sign-up', methods=['GET','POST'])
@@ -82,7 +82,7 @@ def login():
             if check_password_hash(user.password, password):
                 flash('logged in succesfully')
                 login_user(user, remember=True)
-                return redirect(url_for('auth.welcome_page'))
+                return redirect(url_for('auth.home'))
             else:
                 flash('incorrect password, try again', category='error')
             
@@ -99,7 +99,6 @@ def googlelogin():
 
 
 @auth.route('/logout')
-@login_required
 def logout():
     logout_user()
     session.clear()
@@ -133,7 +132,7 @@ def callback():
     db.session.commit()
     flash('Account created!', category='success')
     login_user(new_user, remember=True)
-    return redirect(url_for("auth.welcome_page"))
+    return redirect(url_for("auth.home"))
 
 @auth.route('/reset-password', methods=['GET','POST'])
 def resetpassword():
